@@ -1,4 +1,6 @@
-package com.intenthq.challenge;
+package com.intenthq.challenge
+
+;
 
 object SEnigma {
 
@@ -22,6 +24,14 @@ object SEnigma {
   // Following the above rules, the message would be: “1N73N7 HQ”
   // Check the tests for some other (simpler) examples.
 
-  def deciphe(map: Map[Int, Char])(message: List[Int]): String = ???
+  def deciphe(map: Map[Int, Char])(message: List[Int]): String = {
+    val input = message.foldLeft("")(_ + _)
+    map.keySet.toList
+      .groupBy(_.toString.length)
+      .toSeq.sortWith(_._1 > _._1)
+      .flatMap(kv => kv._2.sortBy(s => input.indexOf(s.toString)))
+      .foldLeft(input)((c, i) => c.replaceAll(i.toString, map(i).toString))
+  }
+
 
 }
